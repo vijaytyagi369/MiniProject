@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
     <title>Quiz Mania</title>
+    
 </head>
 <body>
 
@@ -27,35 +29,15 @@
 
     </form>
 
-    <br>
-    <br>
-    <button>finish</button>
+    <div class="finish">
 
-    <h2> Added Question:</h2>
+        <a href="/">
+        
+            <button class="buttons">Finish</button>
+        
+        </a>
 
-    <% if(data.length>0){ %>
-    <%  data.forEach(question=>{%>
-
-    <h3>Question:-</h3>
-    <h3><%= question.question %> </h3>
-
-    <h4>Option 1:-</h4>
-    <p><%=  question.option_1%></p>
-
-    <h4>Option 2:-</h4>
-    <p><%=  question.option_2%></p>
-
-    <h4>Option 3:-</h4>
-    <p><%=  question.option_3%></p>
-
-    <h4>Option 4:-</h4>
-    <p><%=  question.option_4%></p>
-
-    <h4>Answer:-</h4>
-    <p><%=  question.answer%></p>
-
-    <% }) %>
-    <% } %>
+    </div>
 
     
 </body>

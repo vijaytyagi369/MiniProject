@@ -48,13 +48,14 @@ app.get('/create_quiz', function(req, res){
 
 app.post('/insert', function(req, res){
 
-    let _id = req.body.id;
+    let _id = req.body.id;                  //req.body = post data coming from action tag in a form
 
-    const quiz = new Quiz({quizId: _id});
+    const quiz = new Quiz({quizId: _id});      //saving quizId to DB
 
     quiz.save().then(function(result){
 
-        res.redirect('/insert/' + result._id);
+        res.redirect('/insert/' + result._id);  //here result._id is the id of DB
+                                                //this will help in generating diff link for diff quiz
 
     });
 
@@ -64,33 +65,55 @@ app.get('/insert/:id', function(req,res){
 
     const _id = req.params.id;
 
-    Quiz.findById(_id)
+    Quiz.findById(_id)                          //for verifying if that db exist with that id
         .then(function(result){
 
             console.log(result);
-            res.render('insert', {data: result});
+            res.render('insert', {data: result});       //passing data: result so that
+                                                        // we can redirect to same page
+                                                        //for adding more ques after clicking submit button
 
         });
 
 });
 
-app.post('/insert/:id', function(req,res){
+app.post('/insert/:id', function(req,res){      //runs as soon as submit button is clicked
 
     const _id = req.params.id;
 
-    Quiz.findById(_id)
+    Quiz.findById(_id)                      //for verifying if db exist before saving data
         .then(function(result){
 
-            console.log(req.body);
+            console.log(req.body);          //conatins ques and ans
 
-            result.questions.push(req.body);
+            result.questions.push(req.body);    //result.questions refers to questions array
             console.log(result.questions);
             result.save()
                     .then(function(){
 
-                        res.redirect(_id);
+                        res.redirect(_id);      //doubt
 
                     });
+
+        })
+
+})
+
+app.get('/start_id', function(req, res){
+
+    res.render('start_id');
+
+})
+
+app.post('/start_id', function(req, res){
+
+    const _id = req.body.id;            //req.body = post data
+
+    Quiz.findOne({quizId: _id})         //{condition: value}
+        .then(function(result){
+
+            console.log(result);
+            res.render('start_quiz', {data: result});
 
         })
 
